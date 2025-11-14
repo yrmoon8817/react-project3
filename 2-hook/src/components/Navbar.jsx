@@ -1,11 +1,16 @@
-// TODO: MyLayout, MyRouter 연동
-const Navbar = ({ match }) => (
+import * as MyRouter from "../libs/MyRouter"
+
+const Navbar = () => {
+  const match = MyRouter.useMatch();
+
+ return ( 
   <nav className="Navbar">
-    <a className={"active"} href="/">
+    <MyRouter.Link className={match("/")? "active":""} to="/">
       메뉴목록
-    </a>
-    <a href="/order">주문내역</a>
+    </MyRouter.Link>
+    <MyRouter.Link className={match("/order")? "active":""} to="/order">주문내역</MyRouter.Link>
   </nav>
-);
+ )
+}
 
 export default Navbar;
