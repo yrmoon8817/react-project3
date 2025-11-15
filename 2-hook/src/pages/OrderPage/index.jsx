@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import Navbar from "../../components/Navbar";
+import ErrorDialog from "../../components/ErrorDialog";
 import OrderDeliveryCard from "./OrderDeliveryCard";
 import OrderPaymentCard from "./OrderPaymentCard";
 import OrderStatusCard from "./OrderStatusCard";

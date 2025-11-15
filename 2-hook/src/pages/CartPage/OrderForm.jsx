@@ -1,73 +1,64 @@
 import React from "react";
+import * as MyForm from "../../libs/MyForm";
 import FormControl from "../../components/FormControl";
 
 const OrderForm = ({onSubmit}) => {
-  const getInputValueByName=(name)=> {
-    // if (!this.formRef.current) return;
+  const validate=(values) =>{
+    const errors = {}
 
-    // const inputElement = this.formRef.current.elements.namedItem(name);
-    // if (!inputElement) return "";
-
-    // return inputElement.value;
+    if(!values.deliveryAddress){
+      errors.deliveryAddress='주소를 입력하세요'
+    }
+    if(!values.deliveryContact){
+      errors.deliveryContact='연락처를 입력하세요'
+    }
+    if(!/^\d{2,3}-\d{3,4}-\d{4}$/.test(values.deliveryContact)){
+      errors.deliveryContact='연락처를 입력하세요'
+    }
+    return errors;
   }
-
-  const handleSubmit=(e)=> {
-    e.preventDefault();
-
-    const deliveryAddress = getInputValueByName("deliveryAddress");
-    const deliveryContact = getInputValueByName("deliveryContact");
-    const paymentMethod = getInputValueByName("paymentMethod");
-    const messageToShop = getInputValueByName("messageToShop");
-    const messageToRider = getInputValueByName("messageToRider");
-
-    onSubmit({
-      deliveryAddress,
-      deliveryContact,
-      paymentMethod,
-      messageToRider,
-      messageToShop,
-    });
-  }
-
     return (
-      <form
+      <MyForm.Form
         className="OrderForm"
-        id="order-form"
-        onSubmit={handleSubmit}
+        id={"order-form"}
+        initialValues={{
+          deliveryAddress:'',
+          deliveryContact:'',
+          paymentMethod:'',
+          messageToShop:'',
+          messageToRider:''
+        }}
+        validate={validate}
+        onSubmit={onSubmit}
       >
-        <FormControl label="주소" htmlFor="deliveryAddress" required>
-          <input
+        <FormControl label="주소" htmlFor="deliveryAddress" required error={<MyForm.ErrorMessage name="deliveryAddress"/>}>
+          <MyForm.Field
             type="text"
             name="deliveryAddress"
-            id="deliveryAddress"
             placeholder="배달받을 주소를 입력하세요"
-            required
             autoFocus
           />
         </FormControl>
-        <FormControl label="연락처" htmlFor="deliveryContact" required>
-          <input
+        <FormControl label="연락처" htmlFor="deliveryContact" required error={<MyForm.ErrorMessage name="deliveryContact"/>}>
+          <MyForm.Field
             type="text"
             name="deliveryContact"
-            id="deliveryContact"
             placeholder="연락처를 입력하세요"
-            pattern="^\d{2,3}-\d{3,4}-\d{4}$"
-            required
           />
         </FormControl>
-        <FormControl label="결재수단" htmlFor="paymentMethod" required>
-          <select name="paymentMethod" id="paymentMethod">
+        <FormControl label="결재수단" htmlFor="paymentMethod" required >
+          <MyForm.Field as="select" name="paymentMethod">
             <option value="마이페이">마이페이</option>
             <option value="만나서 결제">만나서 결제</option>
-          </select>
+          </MyForm.Field>
         </FormControl>
         <FormControl label="가게 사장님께" htmlFor="messageToShop">
-          <textarea name="messageToShop" id="messageToShop"></textarea>
+          <MyForm.Field as={"textarea"} name="messageToShop"></MyForm.Field>
         </FormControl>
         <FormControl label="라이더님께" htmlFor="messageToRider">
-          <textarea name="messageToRider" id="messageToRider"></textarea>
+          <MyForm.Field as={"textarea"} name="messageToRider"></MyForm.Field>
         </FormControl>
-      </form>
+      </MyForm.Form>
     );
 }
 

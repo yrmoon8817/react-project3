@@ -91,8 +91,17 @@ const MyReact = (function MyReact(){
     },[context]);
     return value;
   }
+  function useRef(initialValue){
+    if(!isInitialized[cursor]) {
+      memorizedStates[cursor] = {current:initialValue};
+      isInitialized[cursor]=true;
+    }
+    const memorizedState = memorizedStates[cursor]
+    cursor +=1
+    return memorizedState;
 
-  return {useState, useEffect, resetCursor,cleanupEffects,createContext,useContext}
+  }
+  return {useState, useEffect, resetCursor,cleanupEffects,createContext,useContext, useRef}
 })();
 
 export default MyReact;

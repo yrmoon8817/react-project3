@@ -1,11 +1,12 @@
-const FormControl = ({ label, htmlFor, required, children }) => (
-  <div className="FormControl">
+const FormControl = ({ label, htmlFor, required, children, error }) => {
+  return (<div className="FormControl">
     <label htmlFor={htmlFor}>
       {label}
       {required && <span className="required">*</span>}
     </label>
     {children}
-  </div>
-);
+    {error && <div className="error">{error}</div>}
+  </div>)
+}
 
 export default FormControl;

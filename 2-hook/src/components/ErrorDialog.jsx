@@ -5,7 +5,7 @@ import * as MyLayout from "../libs/MyLayout";
 
 const ErrorDialog = () => {
   const {closeDialog} = MyLayout.useDialog();
-  <Dialog
+  return (<Dialog
     header={<>오류</>}
     footer={
       <Button onClick={closeDialog}>
@@ -14,7 +14,7 @@ const ErrorDialog = () => {
     }
   >
     잠시 후 다시 시도해 주세요.
-  </Dialog>
+  </Dialog>)
 }
 
 export default ErrorDialog;

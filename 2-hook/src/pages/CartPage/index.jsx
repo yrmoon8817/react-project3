@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import Navbar from "../../components/Navbar";
+import ErrorDialog from "../../components/ErrorDialog";
 import PaymentButton from "./PaymentButton";
 import PaymentSuccessDialog from "./PaymentSuccessDialog";
 import OrderForm from "./OrderForm";
