@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{memo, useEffect, useState} from "react";
 import {createEventEmitter} from '../../../shared/lib/EventEmitter'
 
 const MyReact = (function MyReact(){
@@ -99,9 +99,79 @@ const MyReact = (function MyReact(){
     const memorizedState = memorizedStates[cursor]
     cursor +=1
     return memorizedState;
-
   }
-  return {useState, useEffect, resetCursor,cleanupEffects,createContext,useContext, useRef}
+  function createStore(reducer, initialValue){
+    // 어떻게 상태를 바꾸는지는 모르지만 상태를 바꾸는 방법을 인자로 받고 그 함수를 호출해서 진짜 상태를 바꾸는 역할을 한다.
+    let currentState = initialValue;
+    const listeners= [];
+    const getState = () => currentState;
+    const subscribe = callback => listeners.push(callback);
+    const dispatch = action =>{
+      const nextState = reducer(currentState, action);
+      if(nextState !== currentState){
+        nextState=currentState;
+        listeners.forEach((listener)=>{
+          listener();
+        })
+      }
+    }
+    return {
+      getState, 
+      subscribe,
+      dispatch
+    }
+  }
+  function useReducer(reducer, initialValue){
+    const {forceUpdate} = useForceUpdate();
+    if(!isInitialized[cursor]){
+      memorizedStates[cursor]=createStore(reducer, initialValue);
+      isInitialized[cursor]=true;
+    }
+    const store = memorizedStates[cursor];
+    store.subscribe(forceUpdate);
+    cursor +=1;
+    return [store.getState(), store.dispatch]
+  }
+  function useMemo(nextCreate, deps){
+    if(!memorizedStates[cursor]){
+      const nextValue = nextCreate();
+      memorizedStates[cursor] = [nextValue, deps]
+      cursor+=1
+      return nextValue;
+    }
+    const nextDeps = deps;
+    const [prevValue, prevDeps] = memorizedStates[cursor]
+    if(prevDeps.every((prev, index)=> prev == nextDeps[index])){
+      cursor +=1;
+      return prevValue;
+    }
+    const nextValue = nextCreate();
+    memorizedStates[cursor] = [nextValue, deps];
+    cursor +=1;
+    return nextValue;
+  }
+  function useCallback(callback, deps){
+    return useMemo(()=> callback, deps)
+  }
+  // 컴포넌트를 메모이제이션
+  function memo(TargetComponent){
+    return (nextProps)=>{
+      if(!TargetComponent.memorizedState){
+        const nextValue = React.createElement(TargetComponent, nextProps);
+        TargetComponent.memorizedState = [nextValue, nextProps];
+        return nextValue;
+      }
+      const [prevValue, prevProps] = TargetComponent.memorizedState;
+      const sameProps = Object.keys(nextProps).every(key=>{
+        return nextProps[key]===prevProps[key];
+      })
+      if(sameProps) return prevValue;
+      const nextValue = React.createElement(TargetComponent, nextProps);
+      TargetComponent.memorizedState = [nextValue, nextProps];
+      return nextValue;
+    }
+  }
+  return {useState, useEffect, resetCursor,cleanupEffects,createContext,useContext, useRef, createStore, useReducer,useMemo, memo, useCallback}
 })();
 
 export default MyReact;

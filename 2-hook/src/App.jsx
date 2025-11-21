@@ -5,6 +5,7 @@ import CartPage from "./pages/CartPage";
 import OrderPage from './pages/OrderPage';
 import * as MyRouter from './libs/MyRouter';
 import * as MyLayout from './libs/MyLayout';
+import MyReact from './libs/MyReact';
 
 const App = () => (
   <MyLayout.Layout>
@@ -17,59 +18,107 @@ const App = () => (
     </MyRouter.Router>
   </MyLayout.Layout>
 )
-// export default App;
+export default App;
+
+// const Board = ({posts, tag})=>{
+//   MyReact.resetCursor();
+//   const [darkTheme, setDartTheme] = React.useState(false)
+//   const filterPosts = () => {
+//     console.log('filterPosts');
+//     return posts.filter(post => (tag? post.tag===tag : true));
+//   }
+//   const filteredPosts = MyReact.useMemo(filterPosts,[posts, tag]);
+//   const handleClick = React.useCallback((postId)=>{
+//     console.log("handleClick", postId)
+//   },[])
+//   console.log("Board rendered");
+
+//   return <>
+//   <div>
+//     <button onClick={()=>setDartTheme(!darkTheme)}>테마 변경</button>
+//     <span>{darkTheme?"다크모드":"라이트모드"}</span>
+//     <FilteredPosts value={filteredPosts} onClick={handleClick}/>
+//   </div>  
+//   </>
+// }
+// 인자가 같으면 항상 같은 내용을 반환함
+// const FilteredPosts = MyReact.memo(({value, onClick})=>{
+//   console.log('FilterPosts render')
+//   return (
+//     <ul>
+//       {value.map(({id, content, tag})=>(
+//         <li key={id} onClick={onClick}>
+//           {content} <span>#{tag}</span>
+//         </li>
+//       ))}
+//     </ul>
+//   )
+// })
+// export default() =>{
+//   const [tag, setTag] = React.useState('');
+//   return (
+//   <>
+//   <button onClick={()=>setTag("")}>All</button>
+//   <button onClick={()=>setTag("tag1")}>Tag1</button>
+//   <button onClick={()=>setTag("tag2")}>Tag2</button>
+//   <Board posts={[
+//     {id: 'id1', content:'content1', tag:'tag1'},
+//     {id: 'id2', content:'content2', tag:'tag2'},
+//     {id: 'id3', content:'content3', tag:'tag3'},
+//   ]} tag={tag}/></>)
+// }
 
 
-function RegisterForm(){
-  const [state, setState]=React.useState({
-    value:{nickname:"", password:""},
-    error:{nickname:"", password:""},
-  });
-  const handleChange=(e)=>{
-    setState({
-      ...state,
-      value: {
-        ...state.value,
-        [e.target.name]:e.target.value
-      }
-    })
-  }
-  const handleReset=(e)=>{
-    setState({
-      value:{nickname:"", password:""},
-      error:{nickname:"", password:""},
-    })
-  }
-  const handleSubmit=(e)=>{
-    setState({
-      ...state,
-      error: {
-        nickname: /^\w+$/.test(state.value.nickname) ? '' : '영문, 숫자만 입력하세요.',
-        password: /^.{3,6}$/.test(state.value.password) ? '' : '3자이상 6자이하로 입력하세요.',
-      }
-    })
-  }
+// function RegisterForm(){
+//   const [state, setState]=React.useState({
+//     value:{nickname:"", password:""},
+//     error:{nickname:"", password:""},
+//   });
+//   const handleChange=(e)=>{
+//     setState({
+//       ...state,
+//       value: {
+//         ...state.value,
+//         [e.target.name]:e.target.value
+//       }
+//     })
+//   }
+//   const handleReset=(e)=>{
+//     setState({
+//       value:{nickname:"", password:""},
+//       error:{nickname:"", password:""},
+//     })
+//   }
+//   const handleSubmit=(e)=>{
+//     setState({
+//       ...state,
+//       error: {
+//         nickname: /^\w+$/.test(state.value.nickname) ? '' : '영문, 숫자만 입력하세요.',
+//         password: /^.{3,6}$/.test(state.value.password) ? '' : '3자이상 6자이하로 입력하세요.',
+//       }
+//     })
+//   }
 
-  return(
-    <>
-      <div>
-        <label>닉네임:</label>
-        <input type="text" name="nickname" value={state.value.nickname} onChange={handleChange}/>
-        <span>{state.error.nickname}</span>
-      </div>
-      <div>
-        <label>비밀번호:</label>
-        <input type="password" name="password" value={state.value.password} onChange={handleChange}/>
-        <span>{state.error.password}</span>
-      </div>
-      <button onClick={handleReset}>초기화</button>
-      <button onClick={handleSubmit}>회원가입</button>
-    </>
-  )
+//   return(
+//     <>
+//       <div>
+//         <label>닉네임:</label>
+//         <input type="text" name="nickname" value={state.value.nickname} onChange={handleChange}/>
+//         <span>{state.error.nickname}</span>
+//       </div>
+//       <div>
+//         <label>비밀번호:</label>
+//         <input type="password" name="password" value={state.value.password} onChange={handleChange}/>
+//         <span>{state.error.password}</span>
+//       </div>
+//       <button onClick={handleReset}>초기화</button>
+//       <button onClick={handleSubmit}>회원가입</button>
+//     </>
+//   )
 
-}
+// }
 
-export default RegisterForm;
+// export default RegisterForm;
 
 // const LoginForm = () =>{
 
