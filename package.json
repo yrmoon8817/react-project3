@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "1-react": "npm start --workspace 1-react",
-    "2-hook": "npm start --workspace 2-hook"
+    "2-hook": "npm start --workspace 2-hook",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "Jeonghwan Kim <ej88ej@gmail.com>",
@@ -22,5 +22,17 @@
   ],
   "msw": {
     "workerDirectory": "shared/public"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "babel-loader": "^10.0.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "msw": "^1.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

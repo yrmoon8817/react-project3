@@ -1,5 +1,5 @@
 import React,{memo, useEffect, useState} from "react";
-import {createEventEmitter} from '../../../shared/lib/EventEmitter'
+import {createEventEmitter} from 'shared/lib/EventEmitter'
 
 const MyReact = (function MyReact(){
   const memorizedStates=[];

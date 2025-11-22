@@ -1,44 +1,37 @@
 import React from "react";
-import ProductApi from "shared/api/ProductApi";
+import OrderableProductItem from "./OrderableProductItem";
 import Page from "../../components/Page";
 import Title from "../../components/Title";
 import Navbar from "../../components/Navbar";
 import ErrorDialog from "../../components/ErrorDialog";
-import * as MyLayout from "../../lib/MyLayout";
-import OrderableProductItem from "./OrderableProductItem";
+import ProductApi from "shared/api/ProductApi";
+import * as MyLayout from "../../libs/MyLayout";
 
-class ProductPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      productList: [],
-    };
-  }
-
-  componentDidMount() {
-    this.fetch();
-  }
-
-  async fetch() {
-    const { startLoading, finishLoading, openDialog } = this.props;
-
-    startLoading("메뉴 목록 로딩중...");
+const ProductPage = () => {
+  const {openDialog} = MyLayout.useDialog();
+  const {startLoading, finishLoading} = MyLayout.useLoading();
+  const [productList, setProductList] = React.useState([]);
+  const fetch = async() =>{
+    startLoading("메뉴 목록 로딩중..");
     try {
       const productList = await ProductApi.fetchProductList();
-      this.setState({ productList });
-    } catch (e) {
+      setProductList(productList);
+
+    }catch (e) {
       openDialog(<ErrorDialog />);
       return;
     }
     finishLoading();
   }
-
-  render() {
-    return (
+  React.useEffect(()=>{
+    fetch();
+  },[]);
+  
+  return  (
       <div className="ProductPage">
         <Page header={<Title>메뉴목록</Title>} footer={<Navbar />}>
           <ul>
-            {this.state.productList.map((product) => (
+            {productList.map((product) => (
               <li key={product.id}>
                 <OrderableProductItem product={product} />
               </li>
@@ -47,7 +40,7 @@ class ProductPage extends React.Component {
         </Page>
       </div>
     );
-  }
+
 }
 
-export default MyLayout.withLayout(ProductPage);
+export default ProductPage;
