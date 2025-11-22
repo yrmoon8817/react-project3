@@ -86,11 +86,12 @@ export const useMatch =()=>{
 // 아직은 커스텀 훅이 아님
 export const useParams = () =>{
   // useMemo 사용해야함
-  const params = new URLSearchParams(window.location.search)
-  const paramObject = {};
-  for(const [key, value] of params) {
-    paramObject[key] = value;
-  }
-  return paramObject;
-
+  return React.useMemo(()=>{
+    const params = new URLSearchParams(window.location.search);
+    const paramObject = {};
+    for(const [key, value] of params) {
+      paramObject[key] = value;
+    }
+    return paramObject;
+  }, []);
 };

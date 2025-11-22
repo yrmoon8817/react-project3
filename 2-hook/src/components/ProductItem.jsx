@@ -6,8 +6,8 @@ const ProductItem = ({ product, onClick }) => {
   return (
     <div className="ProductItem">
       <div className="description">
-        <h2>{name}</h2>
-        <div>{price.toLocaleString()}원</div>
+        <strong className="food_name">{name}</strong>
+        <span className="price">{price.toLocaleString()}원</span>
         {onClick && (
           <Button styleType="brand" onClick={onClick}>
             주문하기

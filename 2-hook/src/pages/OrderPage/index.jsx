@@ -26,7 +26,16 @@ const OrderPage = () => {
   }
   useEffect(()=>{
     fetch();
-  },[])
+  },[]);
+  useEffect(()=>{
+    const timer = setInterval(async()=>{
+      const order = await OrderApi.fetchMyOrder();
+      setOrder(order);
+    },5000);
+    return () =>{
+      clearInterval(timer);
+    }
+  }, [])
   return (
     <div className="OrderPage">
       <Page header={<Title>주문내역</Title>} footer={<Navbar />}>

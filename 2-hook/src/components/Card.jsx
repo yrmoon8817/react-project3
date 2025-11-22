@@ -1,15 +1,17 @@
 const Card = ({ header, data = [], footer }) => (
-  <div className="Card">
-    {header && <header>{header}</header>}
-    <main>
+  <div className="card">
+    {header && <div className="order_header">{header}</div>}
+    <div className="order_contents">
+      <dl className="order_info">
       {data.map(({ term, description }) => (
-        <dl key={term}>
-          <dt>{term}</dt>
-          <dd>{description}</dd>
-        </dl>
+        <div key={term} className="info_group">
+          <dt className="type">{term}</dt>
+          <dd className="value" >{description}</dd>
+        </div>
       ))}
-    </main>
-    {footer && <footer>{footer}</footer>}
+      </dl>
+    </div>
+    {footer && <div className="order_footer">{footer}</div>}
   </div>
 );
 

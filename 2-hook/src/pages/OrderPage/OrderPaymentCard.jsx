@@ -12,11 +12,16 @@ const OrderPaymentCard = ({ order }) => {
   return (
     <Card
       header={
-        <>
-          총 결제금액: {totalPrice.toLocaleString()}원
-          <br />
-          결제 방법: {paymentMethod}
-        </>
+        <dl className="pay_box">
+          <div className="info_group">
+            <dt className="type">총 결제금액:</dt>
+            <dd className="value" >{totalPrice.toLocaleString()}원</dd>
+          </div>        
+          <div className="info_group">
+            <dt className="type">결제 방법:</dt>
+            <dd className="value" >{paymentMethod}</dd>
+          </div>        
+        </dl>
       }
       data={[
         {

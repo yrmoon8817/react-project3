@@ -154,8 +154,6 @@ body,
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #eee;
-  background-color: var(--base-background-color);
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   margin: 0;
@@ -179,17 +177,8 @@ code {
   text-decoration: underline;
 }
 .Button.brand {
-  border: 1px solid #2ac1bc;
-  border: 1px solid var(--brand-color);
-  color: #2ac1bc;
-  color: var(--brand-color);
-}
-.Button.brand-solid,
-.Button.brand:focus,
-.Button.brand:hover {
-  background-color: #2ac1bc;
-  background-color: var(--brand-color);
-  color: #fff;
+  border: 1px solid #225553;
+  color: #225553;
 }
 .Button.brand-solid {
   border: 1px solid #2ac1bc;
@@ -203,6 +192,9 @@ code {
   border-top: 1px solid #ced4da;
   border-top: 1px solid var(--border-color);
   padding: 8px 16px;
+}
+.PaymentButton .Button {
+  color: #2ac1bc;
 }
 .Navbar {
   align-items: center;
@@ -256,7 +248,7 @@ code {
   flex: 1 1;
   max-height: 200px;
   min-height: 40px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .Dialog > footer {
   padding-top: 1rem;
@@ -322,23 +314,36 @@ code {
   align-items: center;
   background-color: #fff;
   display: flex;
-  padding: 8px 16px;
+  padding: 16px 20px;
 }
 .ProductItem .description {
+  display:flex;
+  flex-direction: column;
   flex: 1 1;
 }
-.ProductItem .description > h2 {
-  margin: 0;
+.ProductItem .description .price {
+  margin-top:6px;
+  
+}
+.ProductItem .description strong {
+  font-size:1.3rem;
 }
 .ProductItem .description > button {
-  margin-top: 8px;
+  padding:5px 15px;
+  flex:0 0 auto;
+  width:max-content;
+  margin-top: 15px;
 }
 .ProductItem .thumbnail {
+  width:100px;
+  height:100px;
   margin-left: 8px;
+  border-radius:4px;
+  overflow:hidden;
 }
 .ProductItem .thumbnail > img {
-  height: 100px;
-  width: 100px;
+  width: 100%;
+  object-fit:cover;
 }
 .Page {
   display: flex;
@@ -346,9 +351,14 @@ code {
   min-width: 320px;
 }
 .Page > header {
+  position:fixed;
   background-color: #fff;
   display: flex;
+  justify-content:center;
+  align-items: center;
+  min-height: 60px;
   width: 100%;
+  box-shadow: 1px 0px 10px rgba(0,0,0, 0.2);
 }
 .Page > header h1 {
   flex: 1 1;
@@ -376,6 +386,7 @@ code {
   width: 100%;
 }
 .ProductPage main {
+  margin-top:60px;
   padding-bottom: 51px;
 }
 .ProductPage main > ul {
@@ -384,13 +395,10 @@ code {
   padding-left: 0;
 }
 .ProductPage main > ul > li {
-  border-bottom: 1px solid #ced4da;
-  border-bottom: 1px solid var(--border-color);
-}
-.ProductPage main > ul > li:last-child {
-  border-bottom: none;
+  border-bottom: 1px solid #ececec;
 }
 .CartPage main {
+  margin-top:60px;
   padding-bottom: 62px;
 }
 .CartPage main .OrderForm {
@@ -398,13 +406,76 @@ code {
   margin: 8px 0 0;
   padding: 16px 16px 4px;
 }
+.CartPage .ProductItem {
+  border-bottom:1px solid #ddd;
+}
 .OrderPage main {
-  padding-bottom: 51px;
+  margin-top:60px;
+  padding:20px 20px 80px;
 }
-.OrderPage main .Card {
-  margin-bottom: 8px;
+.OrderPage main .card {
+  border-radius:4px;
+  box-shadow:0 0 10px rgba(51,51,51, 0.2);
+  padding:20px;
+  box-sizing:border-box;
 }
-.OrderPage main .Card:last-child {
-  margin-bottom: 0;
+.OrderPage main .card ~ .card {
+  margin-top:20px;
+}
+.OrderPage .card .order_header strong{
+  padding-bottom:10px;
 }
 /*# sourceMappingURL=main.e9124b97.css.map*/
+ul{
+  padding:0;margin:0;
+}
+li {
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+.state_box {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.state_box .state_title {
+  font-size:1.2rem;
+  color:#484faf;
+}
+.state_box .state_menu {
+  font-size: 1.2rem;
+  font-weight:bold;
+}
+.info_group {
+  display:flex;
+  align-items:center;
+}
+.info_group ~ .info_group {
+  margin-top:10px;
+}
+.info_group .type {
+  min-width:100px;
+}
+.info_group .value {
+  margin-left:10px;
+}
+.btn_location {
+  background-color:#fff;
+  border:0;
+  border-bottom:1px solid #777;
+  margin-left:6px;
+  cursor:pointer;
+  padding:5px 8px;
+}
+.order_footer {
+  display:flex;
+  justify-content:end;
+}
+.order_footer .Button + .Button{
+  margin-left:10px;
+}
+.pay_box {
+  border-bottom:1px solid #dfdcdc;
+  padding-bottom:10px;
+}
