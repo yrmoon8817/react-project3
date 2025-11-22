@@ -36548,7 +36548,7 @@ var createStop = (context) => {
 // src/setupWorker/start/utils/prepareStartHandler.ts
 var DEFAULT_START_OPTIONS = {
   serviceWorker: {
-    url: "/mockServiceWorker.js",
+    url: "./mockServiceWorker.js",
     options: null
   },
   quiet: false,
